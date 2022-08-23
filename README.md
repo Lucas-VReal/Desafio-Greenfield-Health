@@ -9,12 +9,13 @@ Na reunião técnica sobre o sistema, ficou decidido que o hospital iria se inte
 - Frontend: JS com React
 - Banco de dados: SQL com Postgres
 <br></br>
-Foram definidos os seguintes requisitos para o **backend**:
+Foram definidos os seguintes requisitos para o *backend*:
 <br></br>
 - Testes unitários com JUnit com cobertura acima de 60% sobre as funcionalidades disponibilizadas
 - Documentação da API com Swagger
 <br></br>
 Foram definidos os seguintes requisitos para o *frontend*:
+<br></br>
 - Utilização de componentes baseados em função
 - Utilização dos hooks useState e useEffect
 - Utilização de alguma biblioteca de design (Bootstrap, PrimeFaces, MUI, Tailwind, etc)
@@ -67,7 +68,7 @@ Com os requisitos técnicos pré-estabelecidos a Greenfield Health poderá segui
    - Dosagem,
    - Frequência de uso
 <br></br>
-## O Desafio
+## O Desafio 🚀
 Sabendo disto, você foi contratado para que possa seguir com o desenvolvimento das funcionalidades planejadas para a primeira entrega da Greenfield Health ao hospital contratante
 do serviço. 
 <<br></br>
@@ -94,7 +95,7 @@ Itens opcionais:
   - Storybook
   - Hospedagem do sistema
 <br></br>
-## Entrega
+## Entrega 📬
 Após o término do projeto, enviar arquivo compactado para:
 brunno.oliver7@gmail.com
 <br></br>

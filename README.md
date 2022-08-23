@@ -1,4 +1,4 @@
-# Desafio-Greenfield-Health
+# Desafio-Greenfield-Health 🏥
 A Greenfield Health precisa disponibilizar um serviço para um hospital em que médicos possam cadastrar prescrições médicas para pacientes que realizam uma consulta e necessitam de uma receita com os devidos medicamentos.
 <br></br>
 
@@ -38,7 +38,7 @@ Alguns requisitos não técnicos foram pré-estabelecidos, como por exemplo:
 ## Modelagem
 Com os requisitos técnicos pré-estabelecidos a Greenfield Health poderá seguir com o planejamento e desenvolvimento de acordo com o seguinte modelo de dados:
 <br></br>
-- Médico
+- Médico 🩺
 <br></br>
   - CPF
   - Email
@@ -50,7 +50,7 @@ Com os requisitos técnicos pré-estabelecidos a Greenfield Health poderá segui
   - Senha
   - Confirmação da Senha
  <br></br>
-- Prescrição médica 
+- Prescrição médica 📑
 <br></br>
   - CRM do médico
   - Estado de registro do CRM
@@ -60,7 +60,7 @@ Com os requisitos técnicos pré-estabelecidos a Greenfield Health poderá segui
   - Nome do paciente
   - Data de Nascimento do paciente
  <br></br>
- - Medicamentos
+ - Medicamentos 💉💊
  <br></br>
    - Descrição
    - Quantidade

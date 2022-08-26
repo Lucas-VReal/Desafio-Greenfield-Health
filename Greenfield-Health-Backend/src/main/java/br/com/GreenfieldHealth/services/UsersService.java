@@ -11,6 +11,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -31,7 +33,7 @@ public class UsersService {
 
 
     public ResponseEntity<Object> createNewUser(UsersDto usersDto) {
-            //Regra de não cadastrar usuários que com o mesmo Username
+            //Regra de não cadastrar usuários com o mesmo Username
             if(usersRepository.existsByUsername(usersDto.getUsername())){
                 return ResponseEntity.status(HttpStatus.CONFLICT).body("Este Username ja esta sendo utilizado");
              }
@@ -73,32 +75,67 @@ public class UsersService {
                 //Atualizando as informações de Username e senha criptografada
                 updatedUser.setUsername(usersDto.getUsername());
                 updatedUser.setPassword(encoder.encode(usersDto.getPassword()));
-                //Salvando no banco PostgreSQL
+                //Excluindo antigas configurações e atribuindo novas
+                usersRepository.delete(usersModelOptional.get());
                 usersRepository.save(updatedUser);
                 return ResponseEntity.status(HttpStatus.OK).body("Usuário atualizado com sucesso!");
             }
             //Caso contrário o sistema apresentará o erro abaixo
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Não foi possível atualizar o usuário com os dados informados");
     }
-
-    public ResponseEntity<Object> setRole(String userName, Enum roleEnum) {
+    @Transactional
+    public ResponseEntity<Object> setRole(String userName, Enum roleEnum, UUID id) {
         //Verificar se existe o Username e Rolename no banco de dados
-        if(usersRepository.existsByUsername(userName)) {
+        if(usersRepository.existsById(id)) {
             //Passando os dados buscados para um novo usuário e role
-            Optional<UsersModel> usersModelOptional = usersRepository.findByUsername(userName);
-            UsersModel user = usersModelOptional.get();
+            Optional<UsersModel> usersModelOptional = usersRepository.findById(id);
+            var user = new UsersModel();
+            BeanUtils.copyProperties(usersModelOptional.get(), user);
             Optional<RoleModel> roleModelOptional = rolesRepository.findRoleModelByRoleId(rolesRepository.findIdByEnum(roleEnum));
-            RoleModel role = roleModelOptional.get();
+            var role = new RoleModel();
+            BeanUtils.copyProperties(roleModelOptional.get(), role);
             //Verificando se os dados do usuário e role não são nulos
             if (user.getUserId() != null && user.getUsername() != null && user.getPassword() != null && role.getRoleId() != null && role.getRoleName() != null){
-                //salvando no banco de dados
-                List<RoleModel> rolesList = user.getRoles();
+                //salvando os dados
+                List<RoleModel> rolesList = new ArrayList<>();
                 rolesList.add(role);
+                user.setRoles(null);
                 user.setRoles(rolesList);
-                return ResponseEntity.accepted().body("Foram concedidas as permissões de " + role.getRoleName() + "para o(a) usuario(a) " + user.getUsername());
+                usersRepository.save(user);
+                return ResponseEntity.accepted().body("Foram concedidas as permissões de " + role.getRoleName() + " para o(a) usuario(a) " + user.getUsername());
             }
 
         }
         return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("Verifique as informações de usuários/roles e tente novamente");
+    }
+    @Transactional
+    public ResponseEntity<Object> deleteUser(UUID id, UsersDto usersDto) {
+        //Verificar se usuário existe no banco e se o Username pode ser utilizado
+        if(usersRepository.existsById(id)){
+            Optional<UsersModel> usersModelOptional = usersRepository.findById(id);
+            UsersModel deletedUser = usersModelOptional.get();
+            //Comparando Username e Senha com os dados do Id Informado
+            if(usersDto.getUsername().equalsIgnoreCase(deletedUser.getUsername()) && usersDto.getPassword().equalsIgnoreCase(deletedUser.getPassword())){
+                return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("Os dados de Login e senha não conferem com o ID informado");
+            }
+            //Deletando no banco PostgreSQL
+            usersRepository.delete(deletedUser);
+            return ResponseEntity.status(HttpStatus.OK).body("Usuário excluído com sucesso!");
+        }
+        //Caso contrário o sistema apresentará o erro abaixo
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Não foi possível deletar o usuário com os dados informados");
+    }
+
+    public ResponseEntity<Object> deleteUserById(UUID id) {
+        //Verificar se usuário existe no banco e se o Username pode ser utilizado
+        if(usersRepository.existsById(id)){
+            Optional<UsersModel> usersModelOptional = usersRepository.findById(id);
+            UsersModel deletedUser = usersModelOptional.get();
+            //Deletando no banco PostgreSQL
+            usersRepository.delete(deletedUser);
+            return ResponseEntity.status(HttpStatus.OK).body("Usuário excluído com sucesso!");
+        }
+        //Caso contrário o sistema apresentará o erro abaixo
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Não foi possível deletar o usuário com os dados informados");
     }
 }

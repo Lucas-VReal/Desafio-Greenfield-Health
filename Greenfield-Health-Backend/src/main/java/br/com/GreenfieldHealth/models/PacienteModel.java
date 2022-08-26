@@ -15,11 +15,13 @@ public class PacienteModel implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private UUID Pacienteid;
+    private UUID pacienteId;
     @Column (unique = true)
     private String cpf;
     @Column
     private String nome;
     @Column
     private String dataNascimento;
+    @OneToOne(mappedBy = "paciente")
+    private PrescricoesModel prescricao;
 }

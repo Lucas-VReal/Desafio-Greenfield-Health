@@ -4,6 +4,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 import java.util.UUID;
 
 @Data
@@ -17,4 +18,16 @@ public class PrescricoesModel implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID prescriptionId;
     private String description;
+
+    @ManyToOne
+    @JoinColumn(name = "medical_id")
+    private MedicosModel medico;
+
+    @OneToMany
+    private List<MedicamentosModel> medicamentos;
+
+    @OneToOne
+    @JoinColumn(name = "paciente_id")
+    private PacienteModel paciente;
+
 }

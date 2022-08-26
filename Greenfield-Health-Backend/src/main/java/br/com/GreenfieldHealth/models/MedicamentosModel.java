@@ -22,4 +22,8 @@ public class MedicamentosModel {
     @Column
     private String frequenciaUso;
 
+    @ManyToOne
+    @JoinColumn(name = "prescription_id")
+    private PrescricoesModel prescricao;
+
 }

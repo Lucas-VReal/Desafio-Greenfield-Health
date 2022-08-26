@@ -1,0 +1,21 @@
+Regras de Negócio:
+
+Regras de Autenticação: 
+
+Usuários:
+
+ - Possuem Login, senha e tipo de aitenticação.
+ - Não há usuários com o mesmo Login;
+ - O Login deve ter entre 4 e 20 caracteres;
+ - A senha deve ter entre 8 e 16 caracteres;
+
+Tipos de Autenticação:
+
+- Tipos: Admin, Médicos e Pacientes;
+- Todos podem se cadastrar e atualizar/deletar esse cadastro (passando o id e Login/senha);
+- Somente Admin's podem: ver todos os usuários, definir os acessos de cada usuário e deletar somente informando o id;
+
+Regras de Prescrições:
+
+- Cada prescrição está relacionada a somente um médico, mas cada médico pode ter várias prescrições e o paciente só pode ter uma prescrição de medicamentos;
+- Cada prescrição está relacionada a um ou vários medicamentos.

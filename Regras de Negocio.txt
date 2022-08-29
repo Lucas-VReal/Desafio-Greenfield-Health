@@ -17,5 +17,10 @@ Tipos de Autenticação:
 
 Regras de Prescrições:
 
-- Cada prescrição está relacionada a somente um médico, mas cada médico pode ter várias prescrições e o paciente só pode ter uma prescrição de medicamentos;
+- Cada prescrição está relacionada a somente um médico, mas cada médico pode ter várias prescrições e o paciente só pode ter uma prescrição de medicamentos por vez;
 - Cada prescrição está relacionada a um ou vários medicamentos.
+
+Regras de Médicos:
+
+- Não haverão Médicos com o mesmo CPF ou CRM;
+

@@ -23,7 +23,7 @@ public class PrescricoesModel implements Serializable {
     @JoinColumn(name = "medical_id")
     private MedicosModel medico;
 
-    @OneToMany
+    @OneToMany(mappedBy = "medicamentosId", cascade = CascadeType.ALL)
     private List<MedicamentosModel> medicamentos;
 
     @OneToOne

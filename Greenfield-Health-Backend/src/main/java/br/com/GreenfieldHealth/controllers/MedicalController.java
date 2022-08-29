@@ -51,15 +51,13 @@ public class MedicalController {
         //Obs: Para a atualização são necessários o ID e todos os dados obrigatórios no JSON
         return medicosService.updateMedic(id, medicosDto);
     }
-    /*
-    Falta a prescricao:
+
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @PutMapping("/deleteMedic/{id}")
+    @DeleteMapping("/deleteMedic/{id}")
     public ResponseEntity<Object> delteMedicById(@PathVariable(value = "id") UUID id){
         return medicosService.deleteMerdicById(id);
-    }*/
-
+    }
 
 
 }

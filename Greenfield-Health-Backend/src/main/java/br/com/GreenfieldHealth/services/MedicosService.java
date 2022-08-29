@@ -2,23 +2,28 @@ package br.com.GreenfieldHealth.services;
 
 import br.com.GreenfieldHealth.dtos.MedicosDto;
 import br.com.GreenfieldHealth.models.MedicosModel;
-import br.com.GreenfieldHealth.models.UsersModel;
+import br.com.GreenfieldHealth.models.PrescricoesModel;
 import br.com.GreenfieldHealth.repositories.MedicosRepository;
+import br.com.GreenfieldHealth.repositories.PrescricoesRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
 @Service
 public class MedicosService {
     private final MedicosRepository medicosRepository;
+    private final PrescricoesRepository prescricoesRepository;
 
-    public MedicosService(MedicosRepository medicosRepository) {
+    public MedicosService(MedicosRepository medicosRepository, PrescricoesRepository prescricoesRepository) {
         this.medicosRepository = medicosRepository;
+        this.prescricoesRepository = prescricoesRepository;
     }
+
 
     public ResponseEntity<Object> findOneMedicById(UUID medicalId) {
         if(medicosRepository.existsById(medicalId)){
@@ -55,6 +60,7 @@ public class MedicosService {
             //Excluindo antigos dados e salvando novos no banco
             medicosRepository.delete(medicosModelOptional.get());
             medicosRepository.save(updatedMedic);
+            medicosRepository.flush();
             return ResponseEntity.status(HttpStatus.OK).body("Medico atualizado e ID modificado");
         }
         //Caso contrário o sistema apresentará o erro abaixo
@@ -62,4 +68,18 @@ public class MedicosService {
     }
 
 
+    public ResponseEntity<Object> deleteMerdicById(UUID id) {
+
+        if(medicosRepository.existsById(id)){
+            Optional<MedicosModel> medicosModelOptional = medicosRepository.findById(id);
+            MedicosModel deletedMedic = medicosModelOptional.get();
+            //Removendo medico
+            medicosRepository.delete(deletedMedic);
+            medicosRepository.flush();
+            return ResponseEntity.status(HttpStatus.OK).body("Médico deletado com sucesso!");
+        }
+        //Caso contrário o sistema apresentará o erro abaixo
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Não foi possível remover o Médico com os dados informados");
+
+    }
 }

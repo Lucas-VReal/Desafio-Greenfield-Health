@@ -51,17 +51,16 @@ public class MedicosService {
     }
 
     public ResponseEntity<Object> updateMedic(UUID id, MedicosDto medicosDto) {
-        //Verificar se usuário existe no banco e se o CPF pode ser utilizado
+        //Verificar se usuário existe no banco
         if(medicosRepository.existsById(id)){
             Optional<MedicosModel> medicosModelOptional = medicosRepository.findById(id);
             MedicosModel updatedMedic = medicosModelOptional.get();
             //Atualizando as informações conforme o JSON
             BeanUtils.copyProperties(medicosDto, updatedMedic);
-            //Excluindo antigos dados e salvando novos no banco
-            medicosRepository.delete(medicosModelOptional.get());
+            //Salvando novos dados no banco
             medicosRepository.save(updatedMedic);
             medicosRepository.flush();
-            return ResponseEntity.status(HttpStatus.OK).body("Medico atualizado e ID modificado");
+            return ResponseEntity.status(HttpStatus.OK).body(updatedMedic);
         }
         //Caso contrário o sistema apresentará o erro abaixo
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Não foi possível atualizar o Médico com os dados informados");
@@ -69,7 +68,6 @@ public class MedicosService {
 
 
     public ResponseEntity<Object> deleteMerdicById(UUID id) {
-
         if(medicosRepository.existsById(id)){
             Optional<MedicosModel> medicosModelOptional = medicosRepository.findById(id);
             MedicosModel deletedMedic = medicosModelOptional.get();

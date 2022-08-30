@@ -14,16 +14,16 @@ public class MedicamentosModel {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID medicamentosId;
     @Column
-    private String descricao;
+    private String nome;
     @Column
-    private int quantidade;
+    private String quantidade;
     @Column
     private String dosagem;
     @Column
     private String frequenciaUso;
 
     @ManyToOne
-    @JoinColumn(name = "prescription_id")
+    @JoinColumn(name = "prescriptionId")
     private PrescricoesModel prescricao;
 
 }

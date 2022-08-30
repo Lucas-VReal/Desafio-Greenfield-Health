@@ -22,6 +22,6 @@ public class PacienteModel implements Serializable {
     private String nome;
     @Column
     private String dataNascimento;
-    @OneToOne(mappedBy = "paciente")
+    @OneToOne(mappedBy = "paciente", cascade = CascadeType.ALL, orphanRemoval = true)
     private PrescricoesModel prescricao;
 }

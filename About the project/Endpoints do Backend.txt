@@ -1,0 +1,44 @@
+Endpoints do Backend:
+
+Get all:
+
+- Users: http://localhost:8080/users/allUsers
+- Medics: http://localhost:8080/medics/allMedics
+- Pacients:http://localhost:8080/pacients/getAll
+- Medicaments: http://localhost:8080/medicaments/getAllMedicaments
+- Prescriptions: http://localhost:8080/medics/prescription/allPrescriptions
+
+Get One: (id needed)
+ 
+- Medics: http://localhost:8080/medics/oneMedic/{id}
+- Pacients: http://localhost:8080/pacients/getOnePacient/{id}
+- Medicaments: http://localhost:8080/medicaments/getOneMedicament/{id}
+- Prescriptions: (Pending)
+
+Create: (Data in Body Request)
+
+- Users: http://localhost:8080/users/newUser
+- Medics: http://localhost:8080/medics/newMedic
+- Pacients: http://localhost:8080/pacients/newPacient
+- Medicaments: http://localhost:8080/medicaments/newMedicament
+- Prescriptions: (Pending)
+
+Update By ID:(Data in Body Request and id needed)
+
+- Users: http://localhost:8080/users/update/{id}
+- Medics: http://localhost:8080/medics/updateMedic/{id}
+- Pacients: http://localhost:8080/pacients/updatePacient/{id}
+- Medicaments: http://localhost:8080/medicaments/updateMedicament/{id}
+- Prescriptions: (Pending)
+
+Delete By Id and Data: 
+
+- Users: http://localhost:8080/users/delete/e70af46a-eff0-4c4f-b0ae-d9638886be8f
+
+Delete By Id only:
+
+- Users:  http://localhost:8080/users/deletebyid/{id}
+- Medics: http://localhost:8080/medics/deleteMedic/{id}
+- Pacients: http://localhost:8080/pacients/deletePacientById/{id}
+- Medicaments: http://localhost:8080/medicaments/deleteMedicament/{id}
+- Prescriptions: (Pending)

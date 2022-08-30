@@ -19,6 +19,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/users")
+@CrossOrigin(origins = "*")
 public class UsersController {
 
     private final UsersRepository usersRepository;

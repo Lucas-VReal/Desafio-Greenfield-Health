@@ -27,6 +27,6 @@ public class MedicosModel implements Serializable {
     private String crm;
     private boolean estadoCrm;
 
-    @OneToMany (mappedBy = "prescriptionId", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "prescriptionId", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<PrescricoesModel> prescricoes;
 }

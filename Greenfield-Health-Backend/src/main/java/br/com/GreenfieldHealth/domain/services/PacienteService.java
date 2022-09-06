@@ -1,7 +1,7 @@
-package br.com.GreenfieldHealth.services;
+package br.com.GreenfieldHealth.domain.services;
 
-import br.com.GreenfieldHealth.dtos.PacienteDto;
-import br.com.GreenfieldHealth.models.PacienteModel;
+import br.com.GreenfieldHealth.domain.dtos.PacienteDto;
+import br.com.GreenfieldHealth.domain.models.PacienteModel;
 import br.com.GreenfieldHealth.repositories.PacienteRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.http.HttpStatus;

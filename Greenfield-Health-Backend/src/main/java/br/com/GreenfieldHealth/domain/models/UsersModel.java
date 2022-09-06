@@ -1,6 +1,7 @@
-package br.com.GreenfieldHealth.models;
+package br.com.GreenfieldHealth.domain.models;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -25,6 +26,7 @@ public class UsersModel implements UserDetails, Serializable {
     @Column(nullable = false)
     private String password;
     @ManyToMany
+    @JsonIgnore
     @JoinTable(name = "TB_USERS_ROLES",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))

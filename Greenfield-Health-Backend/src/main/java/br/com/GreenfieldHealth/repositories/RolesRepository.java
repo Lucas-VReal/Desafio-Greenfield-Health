@@ -1,6 +1,6 @@
 package br.com.GreenfieldHealth.repositories;
 
-import br.com.GreenfieldHealth.models.RoleModel;
+import br.com.GreenfieldHealth.domain.models.RoleModel;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

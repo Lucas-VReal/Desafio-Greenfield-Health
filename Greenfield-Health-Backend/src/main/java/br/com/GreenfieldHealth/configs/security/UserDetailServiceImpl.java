@@ -1,6 +1,6 @@
 package br.com.GreenfieldHealth.configs.security;
 
-import br.com.GreenfieldHealth.models.UsersModel;
+import br.com.GreenfieldHealth.domain.models.UsersModel;
 import br.com.GreenfieldHealth.repositories.UsersRepository;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;

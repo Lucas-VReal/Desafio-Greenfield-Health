@@ -1,8 +1,8 @@
 package br.com.GreenfieldHealth.controllers;
 
-import br.com.GreenfieldHealth.dtos.MedicamentosDto;
+import br.com.GreenfieldHealth.domain.dtos.MedicamentosDto;
+import br.com.GreenfieldHealth.domain.services.MedicamentosService;
 import br.com.GreenfieldHealth.repositories.MedicamentosRepository;
-import br.com.GreenfieldHealth.services.MedicamentosService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;

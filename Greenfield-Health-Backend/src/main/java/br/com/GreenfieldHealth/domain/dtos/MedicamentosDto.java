@@ -1,4 +1,4 @@
-package br.com.GreenfieldHealth.dtos;
+package br.com.GreenfieldHealth.domain.dtos;
 
 import lombok.Data;
 

@@ -1,6 +1,6 @@
-package br.com.GreenfieldHealth.models;
+package br.com.GreenfieldHealth.domain.models;
 
-import br.com.GreenfieldHealth.enums.RoleName;
+import br.com.GreenfieldHealth.utils.enums.RoleName;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 

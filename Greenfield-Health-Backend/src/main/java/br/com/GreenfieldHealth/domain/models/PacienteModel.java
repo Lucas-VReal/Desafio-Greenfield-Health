@@ -1,12 +1,15 @@
-package br.com.GreenfieldHealth.models;
+package br.com.GreenfieldHealth.domain.models;
 
-import lombok.Data;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.UUID;
 
-@Data
+@Getter
+@Setter
 @Entity
 @Table(name = "paciente")
 public class PacienteModel implements Serializable {
@@ -22,6 +25,7 @@ public class PacienteModel implements Serializable {
     private String nome;
     @Column
     private String dataNascimento;
-    @OneToOne(mappedBy = "paciente", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToOne(mappedBy = "paciente", cascade = CascadeType.PERSIST)
+    @JsonIgnore
     private PrescricoesModel prescricao;
 }

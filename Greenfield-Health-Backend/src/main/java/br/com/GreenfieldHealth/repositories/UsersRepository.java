@@ -1,9 +1,7 @@
 package br.com.GreenfieldHealth.repositories;
 
-import br.com.GreenfieldHealth.models.UsersModel;
+import br.com.GreenfieldHealth.domain.models.UsersModel;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;

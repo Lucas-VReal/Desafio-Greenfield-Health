@@ -1,15 +1,13 @@
 package br.com.GreenfieldHealth.controllers;
 
-import br.com.GreenfieldHealth.dtos.MedicosDto;
-import br.com.GreenfieldHealth.dtos.PrescricoesDto;
+import br.com.GreenfieldHealth.domain.dtos.PrescricoesDto;
 import br.com.GreenfieldHealth.repositories.PrescricoesRepository;
-import br.com.GreenfieldHealth.services.PrescriptionService;
+import br.com.GreenfieldHealth.domain.services.PrescriptionService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import javax.persistence.EntityManager;
 import javax.validation.Valid;
 import java.util.UUID;
 
@@ -33,11 +31,21 @@ public class PrescriptionController {
         return ResponseEntity.status(HttpStatus.OK).body(prescricoesRepository.findAll());
     }
 
-    @PreAuthorize("hasRole('ROLE_MEDIC')")
-    @PostMapping("/newPrecription/{id}")
-    public ResponseEntity<Object> createNewPrescription(@PathVariable (name = "id") UUID id, @RequestBody @Valid PrescricoesDto prescriptionDto){
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_MEDIC')")
+    @GetMapping("/allPrescriptionsByMedicalId/{medicalId}")
+    public ResponseEntity<Object> findAllPrescriptionsByMedicId(@PathVariable (name = "medicalId") UUID medicalId){
+        return prescriptionService.findAllPrescriptionsByMedicId(medicalId);
+    }
+
+
+
+    @PreAuthorize("hasAnyRole('ROLE_MEDIC', 'ROLE_ADMIN')")
+    @PostMapping("/newPrescription/{medicId}")
+    public ResponseEntity<Object> createNewPrescription(@PathVariable (name = "medicId") UUID id, @RequestBody @Valid PrescricoesDto prescriptionDto){
         return prescriptionService.createANewPrescription(id, prescriptionDto);
     }
+
+
 
 
 

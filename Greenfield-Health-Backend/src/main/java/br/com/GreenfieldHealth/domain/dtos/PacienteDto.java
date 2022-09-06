@@ -1,6 +1,5 @@
-package br.com.GreenfieldHealth.dtos;
+package br.com.GreenfieldHealth.domain.dtos;
 
-import br.com.GreenfieldHealth.models.PrescricoesModel;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;

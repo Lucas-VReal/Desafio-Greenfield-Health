@@ -1,8 +1,8 @@
-package br.com.GreenfieldHealth.services;
+package br.com.GreenfieldHealth.domain.services;
 
-import br.com.GreenfieldHealth.dtos.UsersDto;
-import br.com.GreenfieldHealth.models.RoleModel;
-import br.com.GreenfieldHealth.models.UsersModel;
+import br.com.GreenfieldHealth.domain.dtos.UsersDto;
+import br.com.GreenfieldHealth.domain.models.RoleModel;
+import br.com.GreenfieldHealth.domain.models.UsersModel;
 import br.com.GreenfieldHealth.repositories.RolesRepository;
 import br.com.GreenfieldHealth.repositories.UsersRepository;
 import org.springframework.beans.BeanUtils;

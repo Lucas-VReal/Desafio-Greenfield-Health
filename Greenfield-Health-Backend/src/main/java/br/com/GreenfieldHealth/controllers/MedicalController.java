@@ -1,10 +1,9 @@
 package br.com.GreenfieldHealth.controllers;
 
-import br.com.GreenfieldHealth.dtos.MedicosDto;
-import br.com.GreenfieldHealth.dtos.UsersDto;
-import br.com.GreenfieldHealth.models.MedicosModel;
+import br.com.GreenfieldHealth.domain.dtos.MedicosDto;
+import br.com.GreenfieldHealth.domain.models.MedicosModel;
 import br.com.GreenfieldHealth.repositories.MedicosRepository;
-import br.com.GreenfieldHealth.services.MedicosService;
+import br.com.GreenfieldHealth.domain.services.MedicosService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;

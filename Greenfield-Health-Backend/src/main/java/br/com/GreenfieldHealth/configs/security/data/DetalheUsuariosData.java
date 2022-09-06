@@ -1,6 +1,6 @@
-package br.com.GreenfieldHealth.data;
+package br.com.GreenfieldHealth.configs.security.data;
 
-import br.com.GreenfieldHealth.models.UsersModel;
+import br.com.GreenfieldHealth.domain.models.UsersModel;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 

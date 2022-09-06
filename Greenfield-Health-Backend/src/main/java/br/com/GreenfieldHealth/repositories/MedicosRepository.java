@@ -1,11 +1,9 @@
 package br.com.GreenfieldHealth.repositories;
 
-import br.com.GreenfieldHealth.models.MedicosModel;
-import br.com.GreenfieldHealth.models.UsersModel;
+import br.com.GreenfieldHealth.domain.models.MedicosModel;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.Optional;
 import java.util.UUID;
 
 @Repository

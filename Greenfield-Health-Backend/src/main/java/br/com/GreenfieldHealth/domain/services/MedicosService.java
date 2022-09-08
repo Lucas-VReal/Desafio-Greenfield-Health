@@ -2,6 +2,7 @@ package br.com.GreenfieldHealth.domain.services;
 
 import br.com.GreenfieldHealth.domain.dtos.MedicosDto;
 import br.com.GreenfieldHealth.domain.models.MedicosModel;
+import br.com.GreenfieldHealth.domain.models.PrescricoesModel;
 import br.com.GreenfieldHealth.repositories.MedicosRepository;
 import br.com.GreenfieldHealth.repositories.PrescricoesRepository;
 import org.springframework.beans.BeanUtils;
@@ -9,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -32,30 +34,23 @@ public class MedicosService {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Nenhum médico encontrado com esse Id");
     }
 
-    public ResponseEntity<Object> createANewMedic(MedicosDto medicosDto) {
+    public ResponseEntity<Object> createANewMedic(MedicosModel newMedic) {
         //Regra de não cadastrar medicos que com o mesmo CPF
-        if(medicosRepository.existsByCpfAndCrm(medicosDto.getCpf(), medicosDto.getCrm())){
+        if(medicosRepository.existsByCpf(newMedic.getCpf()) || medicosRepository.existsByCrm(newMedic.getCrm())){
             return ResponseEntity.status(HttpStatus.CONFLICT).body("Este CPF/CRM ja esta sendo utilizado");
+        }else {
+            //Salvando no banco PostgreSQL
+            medicosRepository.save(newMedic);
+            return ResponseEntity.status(HttpStatus.CREATED).body(newMedic);
         }
-        //Passando as propriedades validadas para o objeto novoMedico
-        if(medicosDto.isEstadoCrm() != true){
-            medicosDto.setEstadoCrm(false);
-        }
-        var novoMedico = new MedicosModel();
-        BeanUtils.copyProperties(medicosDto, novoMedico);
-        //Salvando no banco PostgreSQL
-        medicosRepository.save(novoMedico);
-        return ResponseEntity.status(HttpStatus.CREATED).body(novoMedico);
+
     }
 
-    public ResponseEntity<Object> updateMedic(UUID id, MedicosDto medicosDto) {
+    public ResponseEntity<Object> updateMedic(UUID id, MedicosModel updatedMedic) {
         //Verificar se usuário existe no banco
         if(medicosRepository.existsById(id)){
-            Optional<MedicosModel> medicosModelOptional = medicosRepository.findById(id);
-            MedicosModel updatedMedic = medicosModelOptional.get();
-            //Atualizando as informações conforme o JSON
-            BeanUtils.copyProperties(medicosDto, updatedMedic);
             //Salvando novos dados no banco
+            updatedMedic.setMedicalId(id);
             medicosRepository.save(updatedMedic);
             medicosRepository.flush();
             return ResponseEntity.status(HttpStatus.OK).body(updatedMedic);
@@ -69,8 +64,14 @@ public class MedicosService {
         if(medicosRepository.existsById(id)){
             Optional<MedicosModel> medicosModelOptional = medicosRepository.findById(id);
             MedicosModel deletedMedic = medicosModelOptional.get();
+            //Gambiarra
+            for(int i = 0; i < deletedMedic.getPrescricoes().size(); i++){
+                PrescricoesModel prescription = deletedMedic.getPrescricoes().get(i);
+                prescription.setMedico(null);
+                prescricoesRepository.save(prescription);
+            }
             //Removendo medico
-            medicosRepository.delete(deletedMedic);
+            medicosRepository.deleteById(id);
             medicosRepository.flush();
             return ResponseEntity.status(HttpStatus.OK).body("Médico deletado com sucesso!");
         }

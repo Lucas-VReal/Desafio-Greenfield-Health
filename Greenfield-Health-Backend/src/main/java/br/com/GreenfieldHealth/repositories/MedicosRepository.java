@@ -9,7 +9,10 @@ import java.util.UUID;
 @Repository
 public interface MedicosRepository extends JpaRepository<MedicosModel, UUID> {
 
-    boolean existsByCpfAndCrm(String cpf, String Crm);
+
+    boolean existsByCpf(String cpf);
+
+    boolean existsByCrm(String Crm);
 
 
 }

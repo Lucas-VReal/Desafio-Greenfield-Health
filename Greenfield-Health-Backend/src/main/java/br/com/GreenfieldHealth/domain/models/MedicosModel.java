@@ -30,7 +30,7 @@ public class MedicosModel implements Serializable {
     private String crm;
     private boolean estadoCrm;
 
-    @OneToMany(mappedBy = "medico", cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "medico", cascade = CascadeType.ALL)
     @JsonIgnore
     private List<PrescricoesModel> prescricoes;
 }

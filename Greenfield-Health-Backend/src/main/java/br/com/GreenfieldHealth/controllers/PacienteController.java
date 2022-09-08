@@ -1,6 +1,8 @@
 package br.com.GreenfieldHealth.controllers;
 
+import br.com.GreenfieldHealth.domain.Mappers.PacienteMapper;
 import br.com.GreenfieldHealth.domain.dtos.PacienteDto;
+import br.com.GreenfieldHealth.domain.models.PacienteModel;
 import br.com.GreenfieldHealth.repositories.PacienteRepository;
 import br.com.GreenfieldHealth.domain.services.PacienteService;
 import org.springframework.http.HttpStatus;
@@ -46,7 +48,8 @@ public class PacienteController {
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_MEDIC', 'ROLE_PACIENT')")
     @PutMapping("updatePacient/{id}")
     public ResponseEntity<Object> updatePacient(@PathVariable (name = "id") UUID id, @RequestBody @Valid PacienteDto pacienteDto){
-        return pacienteService.updatePacient(id, pacienteDto);
+        PacienteModel paciente = PacienteMapper.INSTANCE.toEntity(pacienteDto);
+        return pacienteService.updatePacient(id, paciente);
     }
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")

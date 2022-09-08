@@ -27,12 +27,12 @@ public class PrescricoesModel implements Serializable {
     @JoinColumn(name = "medicos_id")
     private MedicosModel medico;
 
-    @OneToMany(cascade = CascadeType.REMOVE)
-    @JsonIgnore
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "medicamento_id")
     private List<MedicamentosModel> medicamentos;
 
     @OneToOne
-    @JoinColumn(name = "pacienteId")
+    @JoinColumn(name = "paciente_id")
     private PacienteModel paciente;
 
 }

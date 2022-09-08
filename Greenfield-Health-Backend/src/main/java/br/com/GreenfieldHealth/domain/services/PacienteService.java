@@ -43,17 +43,19 @@ public class PacienteService {
     }
 
     @Transactional
-    public ResponseEntity<Object> updatePacient(UUID id, PacienteDto pacienteDto) {
+    public ResponseEntity<Object> updatePacient(UUID id, PacienteModel paciente) {
         //Verificar se usuário existe no banco e se o CPF pode ser utilizado
         if(pacienteRepository.existsById(id)){
             Optional<PacienteModel> PacienteModelOptional = pacienteRepository.findById(id);
-            PacienteModel updatedPacient = PacienteModelOptional.get();
-            //Atualizando as informações conforme o JSON
-            BeanUtils.copyProperties(pacienteDto, updatedPacient);
-            //Excluindo antigos dados e salvando novos no banco
-            pacienteRepository.save(updatedPacient);
+            PacienteModel checkPacient = PacienteModelOptional.get();
+            if(!checkPacient.getCpf().equalsIgnoreCase(paciente.getCpf()) && pacienteRepository.existsByCpf(paciente.getCpf())){
+                return ResponseEntity.status(HttpStatus.CONFLICT).body("Este CPF já está associado a outro usuário");
+            }
+            //Salvando novos no banco
+            paciente.setPacienteId(checkPacient.getPacienteId());
+            pacienteRepository.save(paciente);
             pacienteRepository.flush();
-            return ResponseEntity.status(HttpStatus.OK).body(updatedPacient);
+            return ResponseEntity.status(HttpStatus.OK).body(checkPacient);
         }
         //Caso contrário o sistema apresentará o erro abaixo
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Não foi possível atualizar o Médico com os dados informados");

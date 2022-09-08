@@ -1,5 +1,6 @@
 package br.com.GreenfieldHealth.domain.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
@@ -24,5 +25,6 @@ public class MedicamentosModel {
     private String dosagem;
     @Column
     private String frequenciaUso;
+
 
 }

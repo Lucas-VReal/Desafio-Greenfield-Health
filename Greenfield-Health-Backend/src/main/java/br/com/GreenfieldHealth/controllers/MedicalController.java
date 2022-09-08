@@ -1,5 +1,6 @@
 package br.com.GreenfieldHealth.controllers;
 
+import br.com.GreenfieldHealth.domain.Mappers.MedicosMapper;
 import br.com.GreenfieldHealth.domain.dtos.MedicosDto;
 import br.com.GreenfieldHealth.domain.models.MedicosModel;
 import br.com.GreenfieldHealth.repositories.MedicosRepository;
@@ -42,14 +43,16 @@ public class MedicalController {
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_MEDIC')")
     @PostMapping("/newMedic")
     public ResponseEntity<Object> createNewMedic(@RequestBody @Valid MedicosDto medicosDto){
-        return medicosService.createANewMedic(medicosDto);
+        MedicosModel newMedic = MedicosMapper.INSTANCE.toEntity(medicosDto);
+        return medicosService.createANewMedic(newMedic);
     }
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_MEDIC')")
     @PutMapping("/updateMedic/{id}")
     public ResponseEntity<Object> updateMedic(@PathVariable(value = "id") UUID id, @RequestBody @Valid MedicosDto medicosDto){
         //Obs: Para a atualização são necessários o ID e todos os dados obrigatórios no JSON
-        return medicosService.updateMedic(id, medicosDto);
+        MedicosModel updatedMedic = MedicosMapper.INSTANCE.toEntity(medicosDto);
+        return medicosService.updateMedic(id, updatedMedic);
     }
 
 

@@ -25,7 +25,7 @@ public class PacienteModel implements Serializable {
     private String nome;
     @Column
     private String dataNascimento;
-    @OneToOne(mappedBy = "paciente", cascade = CascadeType.PERSIST)
+    @OneToOne(mappedBy = "paciente", cascade = CascadeType.ALL)
     @JsonIgnore
     private PrescricoesModel prescricao;
 }

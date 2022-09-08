@@ -1,7 +1,7 @@
 package br.com.GreenfieldHealth.domain.Mappers;
 
-import br.com.GreenfieldHealth.domain.dtos.MedicosDto;
-import br.com.GreenfieldHealth.domain.models.MedicosModel;
+import br.com.GreenfieldHealth.domain.dtos.DoctorDto;
+import br.com.GreenfieldHealth.domain.models.DoctorsModel;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
@@ -12,8 +12,8 @@ public interface MedicosMapper {
 
     public MedicosMapper INSTANCE = Mappers.getMapper(MedicosMapper.class);
 
-    MedicosDto toDTO(MedicosModel entity);
-    List<MedicosDto> toDTOs(List<MedicosModel> entities);
+    DoctorDto toDTO(DoctorsModel entity);
+    List<DoctorDto> toDTOs(List<DoctorsModel> entities);
 
-    MedicosModel toEntity(MedicosDto dto);
+    DoctorsModel toEntity(DoctorDto dto);
 }

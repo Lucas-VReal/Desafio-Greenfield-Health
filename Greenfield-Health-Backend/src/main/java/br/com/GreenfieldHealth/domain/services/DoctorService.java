@@ -1,78 +1,75 @@
 package br.com.GreenfieldHealth.domain.services;
 
-import br.com.GreenfieldHealth.domain.dtos.MedicosDto;
-import br.com.GreenfieldHealth.domain.models.MedicosModel;
+import br.com.GreenfieldHealth.domain.models.DoctorsModel;
 import br.com.GreenfieldHealth.domain.models.PrescricoesModel;
-import br.com.GreenfieldHealth.repositories.MedicosRepository;
+import br.com.GreenfieldHealth.repositories.DoctorsRepository;
 import br.com.GreenfieldHealth.repositories.PrescricoesRepository;
-import org.springframework.beans.BeanUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
 @Service
-public class MedicosService {
-    private final MedicosRepository medicosRepository;
+public class DoctorService {
+    private final DoctorsRepository doctorsRepository;
     private final PrescricoesRepository prescricoesRepository;
 
-    public MedicosService(MedicosRepository medicosRepository, PrescricoesRepository prescricoesRepository) {
-        this.medicosRepository = medicosRepository;
+    public DoctorService(DoctorsRepository doctorsRepository, PrescricoesRepository prescricoesRepository) {
+        this.doctorsRepository = doctorsRepository;
         this.prescricoesRepository = prescricoesRepository;
     }
 
 
-    public ResponseEntity<Object> findOneMedicById(UUID medicalId) {
-        if(medicosRepository.existsById(medicalId)){
-            Optional<MedicosModel> optionalMedicosModel = medicosRepository.findById(medicalId);
-            MedicosModel medic = optionalMedicosModel.get();
+    public ResponseEntity<Object> findOneDoctorById(UUID medicalId) {
+        if(doctorsRepository.existsById(medicalId)){
+            Optional<DoctorsModel> optionalMedicosModel = doctorsRepository.findById(medicalId);
+            DoctorsModel medic = optionalMedicosModel.get();
             return ResponseEntity.status(HttpStatus.OK).body(medic);
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Nenhum médico encontrado com esse Id");
     }
 
-    public ResponseEntity<Object> createANewMedic(MedicosModel newMedic) {
+    public ResponseEntity<Object> createANewDoctor(DoctorsModel newDoctor) {
         //Regra de não cadastrar medicos que com o mesmo CPF
-        if(medicosRepository.existsByCpf(newMedic.getCpf()) || medicosRepository.existsByCrm(newMedic.getCrm())){
+        if(doctorsRepository.existsByCpf(newDoctor.getCpf()) || doctorsRepository.existsByCrm(newDoctor.getCrm())){
             return ResponseEntity.status(HttpStatus.CONFLICT).body("Este CPF/CRM ja esta sendo utilizado");
         }else {
             //Salvando no banco PostgreSQL
-            medicosRepository.save(newMedic);
-            return ResponseEntity.status(HttpStatus.CREATED).body(newMedic);
+            doctorsRepository.save(newDoctor);
+            return ResponseEntity.status(HttpStatus.CREATED).body(newDoctor);
         }
 
     }
 
-    public ResponseEntity<Object> updateMedic(UUID id, MedicosModel updatedMedic) {
+    public ResponseEntity<Object> updateDoctor(UUID id, DoctorsModel updatedDoctor) {
         //Verificar se usuário existe no banco
-        if(medicosRepository.existsById(id)){
+        if(doctorsRepository.existsById(id)){
             //Salvando novos dados no banco
-            updatedMedic.setMedicalId(id);
-            medicosRepository.save(updatedMedic);
-            medicosRepository.flush();
-            return ResponseEntity.status(HttpStatus.OK).body(updatedMedic);
+            updatedDoctor.setMedicalId(id);
+            doctorsRepository.save(updatedDoctor);
+            doctorsRepository.flush();
+            return ResponseEntity.status(HttpStatus.OK).body(updatedDoctor);
         }
         //Caso contrário o sistema apresentará o erro abaixo
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Não foi possível atualizar o Médico com os dados informados");
     }
 
 
-    public ResponseEntity<Object> deleteMerdicById(UUID id) {
-        if(medicosRepository.existsById(id)){
-            Optional<MedicosModel> medicosModelOptional = medicosRepository.findById(id);
-            MedicosModel deletedMedic = medicosModelOptional.get();
+    public ResponseEntity<Object> deleteDoctorById(UUID id) {
+        if(doctorsRepository.existsById(id)){
+            Optional<DoctorsModel> medicosModelOptional = doctorsRepository.findById(id);
+            DoctorsModel deletedMedic = medicosModelOptional.get();
             //Gambiarra
             for(int i = 0; i < deletedMedic.getPrescricoes().size(); i++){
                 PrescricoesModel prescription = deletedMedic.getPrescricoes().get(i);
-                prescription.setMedico(null);
+                prescription.setDoctor(null);
                 prescricoesRepository.save(prescription);
             }
             //Removendo medico
-            medicosRepository.deleteById(id);
-            medicosRepository.flush();
+            doctorsRepository.deleteById(id);
+            doctorsRepository.flush();
             return ResponseEntity.status(HttpStatus.OK).body("Médico deletado com sucesso!");
         }
         //Caso contrário o sistema apresentará o erro abaixo

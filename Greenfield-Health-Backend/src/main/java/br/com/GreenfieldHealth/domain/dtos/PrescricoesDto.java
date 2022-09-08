@@ -1,7 +1,7 @@
 package br.com.GreenfieldHealth.domain.dtos;
 
+import br.com.GreenfieldHealth.domain.models.DoctorsModel;
 import br.com.GreenfieldHealth.domain.models.MedicamentosModel;
-import br.com.GreenfieldHealth.domain.models.MedicosModel;
 import br.com.GreenfieldHealth.domain.models.PacienteModel;
 import lombok.Data;
 
@@ -14,7 +14,7 @@ public class PrescricoesDto {
     @NotBlank
     private String description;
 
-    private MedicosModel medico;
+    private DoctorsModel medico;
 
     private List<MedicamentosModel> medicamentos;
 

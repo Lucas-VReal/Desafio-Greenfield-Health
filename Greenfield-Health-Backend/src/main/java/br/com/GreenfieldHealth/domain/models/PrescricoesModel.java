@@ -1,7 +1,5 @@
 package br.com.GreenfieldHealth.domain.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import lombok.Getter;
 import lombok.Setter;
 
@@ -25,7 +23,7 @@ public class PrescricoesModel implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "medicos_id")
-    private MedicosModel medico;
+    private DoctorsModel doctor;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "medicamento_id")

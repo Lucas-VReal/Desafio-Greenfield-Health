@@ -13,7 +13,7 @@ import java.util.UUID;
 @Setter
 @Entity
 @Table(name = "medicos")
-public class MedicosModel implements Serializable {
+public class DoctorsModel implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -30,7 +30,7 @@ public class MedicosModel implements Serializable {
     private String crm;
     private boolean estadoCrm;
 
-    @OneToMany(mappedBy = "medico", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "doctor", cascade = CascadeType.ALL)
     @JsonIgnore
     private List<PrescricoesModel> prescricoes;
 }

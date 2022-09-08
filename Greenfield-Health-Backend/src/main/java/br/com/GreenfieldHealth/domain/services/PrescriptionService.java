@@ -3,11 +3,11 @@ package br.com.GreenfieldHealth.domain.services;
 
 import br.com.GreenfieldHealth.domain.Mappers.PrescricoesMapper;
 import br.com.GreenfieldHealth.domain.dtos.PrescricoesDto;
-import br.com.GreenfieldHealth.domain.models.MedicosModel;
+import br.com.GreenfieldHealth.domain.models.DoctorsModel;
 import br.com.GreenfieldHealth.domain.models.PacienteModel;
 import br.com.GreenfieldHealth.domain.models.PrescricoesModel;
 import br.com.GreenfieldHealth.repositories.MedicamentosRepository;
-import br.com.GreenfieldHealth.repositories.MedicosRepository;
+import br.com.GreenfieldHealth.repositories.DoctorsRepository;
 import br.com.GreenfieldHealth.repositories.PacienteRepository;
 import br.com.GreenfieldHealth.repositories.PrescricoesRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -23,22 +23,22 @@ import java.util.UUID;
 public class PrescriptionService {
 
     private final PrescricoesRepository prescricoesRepository;
-    private final MedicosRepository medicosRepository;
+    private final DoctorsRepository doctorsRepository;
     private final PacienteRepository pacienteRepository;
 
     private final MedicamentosRepository medicamentosRepository;
 
-    public PrescriptionService(PrescricoesRepository prescricoesRepository, MedicosRepository medicosRepository, PacienteRepository pacienteRepository, MedicamentosRepository medicamentosRepository) {
+    public PrescriptionService(PrescricoesRepository prescricoesRepository, DoctorsRepository doctorsRepository, PacienteRepository pacienteRepository, MedicamentosRepository medicamentosRepository) {
         this.prescricoesRepository = prescricoesRepository;
-        this.medicosRepository = medicosRepository;
+        this.doctorsRepository = doctorsRepository;
         this.pacienteRepository = pacienteRepository;
         this.medicamentosRepository = medicamentosRepository;
     }
 
     public ResponseEntity<Object> findAllPrescriptionsByMedicId(UUID medicalId) {
-        if(medicosRepository.existsById(medicalId)){
-            Optional<MedicosModel> medicosModelOptional  = medicosRepository.findById(medicalId);
-            MedicosModel medico = medicosModelOptional.get();
+        if(doctorsRepository.existsById(medicalId)){
+            Optional<DoctorsModel> medicosModelOptional  = doctorsRepository.findById(medicalId);
+            DoctorsModel medico = medicosModelOptional.get();
             return ResponseEntity.status(HttpStatus.ACCEPTED).body(medico.getPrescricoes());
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Médico não encontrado");
@@ -54,7 +54,7 @@ public class PrescriptionService {
     @Transactional
     public ResponseEntity<Object> createANewPrescription(PrescricoesModel novaPrescricao) {
         //verificar se existe o médico e o paciente
-        if(medicosRepository.existsById(novaPrescricao.getMedico().getMedicalId()) & pacienteRepository.existsById(novaPrescricao.getPaciente().getPacienteId())){
+        if(doctorsRepository.existsById(novaPrescricao.getDoctor().getMedicalId()) & pacienteRepository.existsById(novaPrescricao.getPaciente().getPacienteId())){
             if(prescricoesRepository.existsByPaciente(novaPrescricao.getPaciente())){
                 return ResponseEntity.status(HttpStatus.CONFLICT).body("Cada paciente só pode receber uma prescricao");
             }

@@ -11,9 +11,4 @@ import java.util.UUID;
 public interface PrescricoesRepository  extends JpaRepository<PrescricoesModel, UUID> {
 
     boolean existsByPaciente(PacienteModel pacienteReceptor);
-
-
-    //@Query(value = "delete from PrescricoesModel p where p.prescriptionId = :p", nativeQuery = true)
-    @Query(value = "delete from prescricoes where prescription_id = ?1", nativeQuery = true)
-    void reallyDeleteById(UUID prescriptionId);
 }

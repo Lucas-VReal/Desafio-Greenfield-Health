@@ -1,35 +1,39 @@
 Endpoints do Backend:
 
+Swagger: http://localhost:8080/swagger-ui/index.html
+
 Get all:
 
 - Users: http://localhost:8080/users/allUsers
-- Medics: http://localhost:8080/medics/allMedics
-- Pacients:http://localhost:8080/pacients/getAll
+- Doctors: http://localhost:8080/Doctors/allDoctors
+- Pacients: http://localhost:8080/pacients/getAll
 - Medicaments: http://localhost:8080/medicaments/getAllMedicaments
 - Prescriptions: http://localhost:8080/medics/prescription/allPrescriptions
 
 Get One: (id needed)
  
-- Medics: http://localhost:8080/medics/oneMedic/{id}
-- Pacients: http://localhost:8080/pacients/getOnePacient/{id}
-- Medicaments: http://localhost:8080/medicaments/getOneMedicament/{id}
-- Prescriptions: (Pending)
+- Doctor: http://localhost:8080/Doctors/oneDoctor/c708fc61-f60d-412b-ad5e-3932e0b03f24
+- Pacients: http://localhost:8080/pacients/getOnePacient/1b3b89a1-8b6b-4cf4-b377-3f56b41edf68
+- Medicaments: http://localhost:8080/medicaments/getOneMedicament/f48256da-2c87-4397-a6d4-cbf68825e08b
+- Prescriptions by Doctors Id: http://localhost:8080/medics/prescription/allPrescriptionsByMedicalId/c708fc61-f60d-412b-ad5e-3932e0b03f24
+- Prescriptions by Pacient Id: 
+http://localhost:8080/medics/prescription/prescriptionByPacienteId/1b3b89a1-8b6b-4cf4-b377-3f56b41edf68
 
 Create: (Data in Body Request)
 
 - Users: http://localhost:8080/users/newUser
-- Medics: http://localhost:8080/medics/newMedic
+- Doctors: http://localhost:8080/Doctors/newDoctor
 - Pacients: http://localhost:8080/pacients/newPacient
 - Medicaments: http://localhost:8080/medicaments/newMedicament
-- Prescriptions: (Pending)
+- Prescriptions: http://localhost:8080/medics/prescription/newPrescription/
 
 Update By ID:(Data in Body Request and id needed)
 
-- Users: http://localhost:8080/users/update/{id}
-- Medics: http://localhost:8080/medics/updateMedic/{id}
-- Pacients: http://localhost:8080/pacients/updatePacient/{id}
-- Medicaments: http://localhost:8080/medicaments/updateMedicament/{id}
-- Prescriptions: (Pending)
+- Users: http://localhost:8080/users/update/e70af46a-eff0-4c4f-b0ae-d9638886be8f
+- Doctors: http://localhost:8080/Doctors/updateDoctor/c708fc61-f60d-412b-ad5e-3932e0b03f24
+- Pacients: http://localhost:8080/pacients/updatePacient/1b3b89a1-8b6b-4cf4-b377-3f56b41edf68
+- Medicaments: http://localhost:8080/medicaments/updateMedicament/f48256da-2c87-4397-a6d4-cbf68825e08b
+- Prescriptions: http://localhost:8080/medics/prescription/updatePrescription/4ca5ed2f-6fca-47f6-a05f-a89bbf509920
 
 Delete By Id and Data: 
 
@@ -37,8 +41,8 @@ Delete By Id and Data:
 
 Delete By Id only:
 
-- Users:  http://localhost:8080/users/deletebyid/{id}
-- Medics: http://localhost:8080/medics/deleteMedic/{id}
-- Pacients: http://localhost:8080/pacients/deletePacientById/{id}
-- Medicaments: http://localhost:8080/medicaments/deleteMedicament/{id}
-- Prescriptions: (Pending)
+- Users:  http://localhost:8080/users/deletebyid/e70af46a-eff0-4c4f-b0ae-d9638886be8f
+- Doctors: http://localhost:8080/Doctors/deleteDoctor/43b73e95-28ca-4065-904c-0b8dc58fc116
+- Pacients: http://localhost:8080/pacients/deletePacientById/1b3b89a1-8b6b-4cf4-b377-3f56b41edf68
+- Medicaments: http://localhost:8080/medicaments/deleteMedicament/f48256da-2c87-4397-a6d4-cbf68825e08b
+- Prescriptions: http://localhost:8080/medics/prescription/deletePrescriptionById/4ca5ed2f-6fca-47f6-a05f-a89bbf509920

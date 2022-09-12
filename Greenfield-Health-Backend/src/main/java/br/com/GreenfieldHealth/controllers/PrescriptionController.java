@@ -51,8 +51,13 @@ public class PrescriptionController {
     @PostMapping("/newPrescription/")
     public ResponseEntity<Object> createNewPrescription(@RequestBody @Valid PrescricoesDto prescriptionDto){
         PrescricoesModel prescription = PrescricoesMapper.INSTANCE.toEntity(prescriptionDto);
-        System.out.println("");
         return prescriptionService.createANewPrescription(prescription);
+    }
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_MEDIC', 'ROLE_PACIENT')")
+    @PutMapping("updatePrescription/{id}")
+    public ResponseEntity<Object> updatePrescriptionById (@PathVariable (name = "id") UUID prescriptionId, @RequestBody PrescricoesDto prescricoesDto){
+        PrescricoesModel prescricao = PrescricoesMapper.INSTANCE.toEntity(prescricoesDto);
+        return prescriptionService.updatePrescriptionByIds(prescriptionId, prescricao);
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")

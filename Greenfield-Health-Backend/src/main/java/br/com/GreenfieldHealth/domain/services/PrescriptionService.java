@@ -72,13 +72,28 @@ public class PrescriptionService {
     @Modifying
     public ResponseEntity<Object> deletePrescriptionById(UUID prescriptionId) {
         if(prescricoesRepository.existsById(prescriptionId)) {
-            try{
-                prescricoesRepository.reallyDeleteById(prescriptionId);
-                prescricoesRepository.flush();
-            }finally {
-                return ResponseEntity.status(HttpStatus.OK).body("Prescricao Removida!");
-            }
+            prescricoesRepository.deleteById(prescriptionId);
+            return  ResponseEntity.status(HttpStatus.OK).body("Prescricao removida");
         }
        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Prescricao nao encontrada");
+    }
+
+    public ResponseEntity<Object> updatePrescriptionByIds(UUID prescriptionId, PrescricoesModel prescricao) {
+        // //verificar se existe o médico e o paciente
+        if(doctorsRepository.existsById(prescricao.getDoctor().getDoctorsId()) & pacienteRepository.existsById(prescricao.getPaciente().getPacienteId())){
+            //pegando dados do Médico e do Paciente
+            Optional<DoctorsModel> doctorsModelOptional = doctorsRepository.findById(prescricao.getDoctor().getDoctorsId());
+            Optional<PacienteModel> pacienteModelOptional = pacienteRepository.findById(prescricao.getPaciente().getPacienteId());
+            DoctorsModel updatedDoctor = doctorsModelOptional.get();
+            PacienteModel updatedPaciente = pacienteModelOptional.get();
+            //passando dados
+            prescricao.setPrescriptionId(prescriptionId);
+            prescricao.setDoctor(updatedDoctor);
+            prescricao.setPaciente(updatedPaciente);
+            //salvando no banco
+            prescricoesRepository.save(prescricao);
+            return ResponseEntity.status(HttpStatus.OK).body(prescricao);
+        }
+        return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("Verifique os dados informados");
     }
 }

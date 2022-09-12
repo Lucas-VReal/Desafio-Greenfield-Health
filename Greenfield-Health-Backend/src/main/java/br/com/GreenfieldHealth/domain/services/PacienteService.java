@@ -2,7 +2,9 @@ package br.com.GreenfieldHealth.domain.services;
 
 import br.com.GreenfieldHealth.domain.dtos.PacienteDto;
 import br.com.GreenfieldHealth.domain.models.PacienteModel;
+import br.com.GreenfieldHealth.domain.models.PrescricoesModel;
 import br.com.GreenfieldHealth.repositories.PacienteRepository;
+import br.com.GreenfieldHealth.repositories.PrescricoesRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,8 +18,11 @@ import java.util.UUID;
 public class PacienteService {
     private final PacienteRepository pacienteRepository;
 
-    public PacienteService(PacienteRepository pacienteRepository) {
+    private final PrescricoesRepository prescricoesRepository;
+
+    public PacienteService(PacienteRepository pacienteRepository, PrescricoesRepository prescricoesRepository) {
         this.pacienteRepository = pacienteRepository;
+        this.prescricoesRepository = prescricoesRepository;
     }
 
     public ResponseEntity<Object> createNewPacient(PacienteDto pacienteDto) {
@@ -65,8 +70,14 @@ public class PacienteService {
         if(pacienteRepository.existsById(id)){
             Optional<PacienteModel> PacienteModelOptional = pacienteRepository.findById(id);
             PacienteModel deletedPacient = PacienteModelOptional.get();
-            //Removendo medico
-            pacienteRepository.delete(deletedPacient);
+            //Gambiarra
+            for(int i = 0; i < deletedPacient.getPrescricoes().size(); i++){
+                PrescricoesModel prescription = deletedPacient.getPrescricoes().get(i);
+                prescription.setPaciente(null);
+                prescricoesRepository.save(prescription);
+            }
+            //Removendo paciente
+            pacienteRepository.deleteById(id);
             pacienteRepository.flush();
             return ResponseEntity.status(HttpStatus.OK).body("Paciente deletado com sucesso!");
         }

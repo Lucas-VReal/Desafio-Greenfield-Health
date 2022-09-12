@@ -47,34 +47,26 @@ public class PrescriptionService {
         if(pacienteRepository.existsById(pacienteId)){
             Optional<PacienteModel> pacienteModelOptional  = pacienteRepository.findById(pacienteId);
             PacienteModel paciente = pacienteModelOptional.get();
-            return ResponseEntity.status(HttpStatus.ACCEPTED).body(paciente.getPrescricao());
+            return ResponseEntity.status(HttpStatus.ACCEPTED).body(paciente.getPrescricoes());
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Médico não encontrado");
     }
     @Transactional
     public ResponseEntity<Object> createANewPrescription(PrescricoesModel novaPrescricao) {
         //verificar se existe o médico e o paciente
-        if(doctorsRepository.existsById(novaPrescricao.getDoctor().getMedicalId()) & pacienteRepository.existsById(novaPrescricao.getPaciente().getPacienteId())){
+        if(doctorsRepository.existsById(novaPrescricao.getDoctor().getDoctorsId()) & pacienteRepository.existsById(novaPrescricao.getPaciente().getPacienteId())){
             if(prescricoesRepository.existsByPaciente(novaPrescricao.getPaciente())){
                 return ResponseEntity.status(HttpStatus.CONFLICT).body("Cada paciente só pode receber uma prescricao");
             }
             //cadastrando os novos medicamentos
+            for(int i = 0; i < novaPrescricao.getMedicamentos().size(); i++){
+                medicamentosRepository.save(novaPrescricao.getMedicamentos().get(i));
+            }
+            //Salvando no banco
             prescricoesRepository.saveAndFlush(novaPrescricao);
             return ResponseEntity.status(HttpStatus.CREATED).body("Prescricao salva!");
         }
         return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("Não foi possível cadatrar a prescricao com os dados informados");
-    }
-
-    public ResponseEntity<Object> updatePrescriptionById(UUID prescriptionId, PrescricoesDto prescriptionDto) {
-        if(prescricoesRepository.existsById(prescriptionId)){
-            PrescricoesModel prescription = PrescricoesMapper.INSTANCE.toEntity(prescriptionDto);
-            prescription.setPrescriptionId(prescriptionId);
-            //cadastrando os novos medicamentos
-            medicamentosRepository.saveAll(prescription.getMedicamentos());
-            prescricoesRepository.save(prescription);
-            return ResponseEntity.status(HttpStatus.ACCEPTED).body(prescription);
-        }
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Verifique o id e os dados informados");
     }
 
     @Modifying

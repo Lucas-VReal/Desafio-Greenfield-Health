@@ -22,17 +22,17 @@ public class DoctorService {
     }
 
 
-    public ResponseEntity<Object> findOneDoctorById(UUID medicalId) {
-        if(doctorsRepository.existsById(medicalId)){
-            Optional<DoctorsModel> optionalMedicosModel = doctorsRepository.findById(medicalId);
-            DoctorsModel medic = optionalMedicosModel.get();
-            return ResponseEntity.status(HttpStatus.OK).body(medic);
+    public ResponseEntity<Object> findOneDoctorById(UUID DoctorId) {
+        if(doctorsRepository.existsById(DoctorId)){
+            Optional<DoctorsModel> optionalDoctorsModel = doctorsRepository.findById(DoctorId);
+            DoctorsModel Doctor = optionalDoctorsModel.get();
+            return ResponseEntity.status(HttpStatus.OK).body(Doctor);
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Nenhum médico encontrado com esse Id");
     }
 
     public ResponseEntity<Object> createANewDoctor(DoctorsModel newDoctor) {
-        //Regra de não cadastrar medicos que com o mesmo CPF
+        //Regra de não cadastrar Doctoros que com o mesmo CPF
         if(doctorsRepository.existsByCpf(newDoctor.getCpf()) || doctorsRepository.existsByCrm(newDoctor.getCrm())){
             return ResponseEntity.status(HttpStatus.CONFLICT).body("Este CPF/CRM ja esta sendo utilizado");
         }else {
@@ -47,7 +47,7 @@ public class DoctorService {
         //Verificar se usuário existe no banco
         if(doctorsRepository.existsById(id)){
             //Salvando novos dados no banco
-            updatedDoctor.setMedicalId(id);
+            updatedDoctor.setDoctorsId(id);
             doctorsRepository.save(updatedDoctor);
             doctorsRepository.flush();
             return ResponseEntity.status(HttpStatus.OK).body(updatedDoctor);
@@ -59,15 +59,15 @@ public class DoctorService {
 
     public ResponseEntity<Object> deleteDoctorById(UUID id) {
         if(doctorsRepository.existsById(id)){
-            Optional<DoctorsModel> medicosModelOptional = doctorsRepository.findById(id);
-            DoctorsModel deletedMedic = medicosModelOptional.get();
+            Optional<DoctorsModel> DoctorsModelOptional = doctorsRepository.findById(id);
+            DoctorsModel deletedDoctor = DoctorsModelOptional.get();
             //Gambiarra
-            for(int i = 0; i < deletedMedic.getPrescricoes().size(); i++){
-                PrescricoesModel prescription = deletedMedic.getPrescricoes().get(i);
+            for(int i = 0; i < deletedDoctor.getPrescricoes().size(); i++){
+                PrescricoesModel prescription = deletedDoctor.getPrescricoes().get(i);
                 prescription.setDoctor(null);
                 prescricoesRepository.save(prescription);
             }
-            //Removendo medico
+            //Removendo Médico
             doctorsRepository.deleteById(id);
             doctorsRepository.flush();
             return ResponseEntity.status(HttpStatus.OK).body("Médico deletado com sucesso!");

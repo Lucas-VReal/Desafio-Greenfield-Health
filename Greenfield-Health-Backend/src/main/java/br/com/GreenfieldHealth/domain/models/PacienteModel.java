@@ -6,6 +6,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 import java.util.UUID;
 
 @Getter
@@ -25,7 +26,7 @@ public class PacienteModel implements Serializable {
     private String nome;
     @Column
     private String dataNascimento;
-    @OneToOne(mappedBy = "paciente", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "paciente", cascade = CascadeType.ALL)
     @JsonIgnore
-    private PrescricoesModel prescricao;
+    private List<PrescricoesModel> prescricoes;
 }

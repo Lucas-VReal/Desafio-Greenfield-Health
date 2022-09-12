@@ -3,7 +3,6 @@ package br.com.GreenfieldHealth.domain.Mappers;
 import br.com.GreenfieldHealth.domain.dtos.PrescricoesDto;
 import br.com.GreenfieldHealth.domain.models.PrescricoesModel;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
 import java.util.List;

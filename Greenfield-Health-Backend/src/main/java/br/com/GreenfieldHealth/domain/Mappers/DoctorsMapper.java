@@ -8,9 +8,9 @@ import org.mapstruct.factory.Mappers;
 import java.util.List;
 
 @Mapper
-public interface MedicosMapper {
+public interface DoctorsMapper {
 
-    public MedicosMapper INSTANCE = Mappers.getMapper(MedicosMapper.class);
+    public DoctorsMapper INSTANCE = Mappers.getMapper(DoctorsMapper.class);
 
     DoctorDto toDTO(DoctorsModel entity);
     List<DoctorDto> toDTOs(List<DoctorsModel> entities);

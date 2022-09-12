@@ -19,7 +19,7 @@ public class DoctorsModel implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private UUID medicalId;
+    private UUID doctorsId;
     @Column(unique = true)
     private String cpf;
     private String nome;

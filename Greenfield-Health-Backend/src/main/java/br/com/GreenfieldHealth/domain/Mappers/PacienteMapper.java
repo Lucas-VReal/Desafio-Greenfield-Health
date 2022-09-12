@@ -16,6 +16,6 @@ public interface PacienteMapper {
     PacienteDto toDto(PacienteModel entity);
     List<PacienteDto> toDTOS(List<PacienteModel> entities);
 
-    @Mapping(target = "prescricao", ignore = true)
+    @Mapping(target = "prescricoes", ignore = true)
     PacienteModel toEntity(PacienteDto dto);
 }

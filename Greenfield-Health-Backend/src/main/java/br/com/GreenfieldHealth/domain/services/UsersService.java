@@ -73,10 +73,9 @@ public class UsersService {
                     return verifyUsernameAndPassword(usersDto);
                 }
                 //Atualizando as informações de Username e senha criptografada
-                updatedUser.setUsername(usersDto.getUsername());
                 updatedUser.setPassword(encoder.encode(usersDto.getPassword()));
+                updatedUser.setUserId(id);
                 //Excluindo antigas configurações e atribuindo novas
-                usersRepository.delete(usersModelOptional.get());
                 usersRepository.save(updatedUser);
                 return ResponseEntity.status(HttpStatus.OK).body("Usuário atualizado com sucesso!");
             }

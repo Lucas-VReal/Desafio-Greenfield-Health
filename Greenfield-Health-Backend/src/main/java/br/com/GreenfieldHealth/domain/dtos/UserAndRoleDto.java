@@ -3,7 +3,6 @@ package br.com.GreenfieldHealth.domain.dtos;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
-import java.util.UUID;
 
 @Data
 public class UserAndRoleDto {

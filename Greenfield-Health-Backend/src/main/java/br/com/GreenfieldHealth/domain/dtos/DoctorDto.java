@@ -12,7 +12,7 @@ public class DoctorDto {
     private String nome;
     @NotBlank
     private String email;
-    private String DataNascimento;
+    private String dataNascimento;
     private String sexo;
     @NotBlank
     private String crm;

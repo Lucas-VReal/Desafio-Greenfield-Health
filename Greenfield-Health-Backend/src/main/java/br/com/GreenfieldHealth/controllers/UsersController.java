@@ -56,6 +56,7 @@ public class UsersController {
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_MEDIC', 'ROLE_PACIENT')")
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<Object> deleteUser(@PathVariable(value = "id") UUID id, @RequestBody @Valid UsersDto usersDto){
+        System.out.println();
         usersDto.setPassword(new BCryptPasswordEncoder().encode(usersDto.getPassword()));
         return userService.deleteUser(id, usersDto);
     }

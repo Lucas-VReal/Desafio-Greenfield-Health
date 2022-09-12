@@ -22,14 +22,14 @@ public class PrescricoesModel implements Serializable {
     private String description;
 
     @ManyToOne
-    @JoinColumn(name = "medicos_id")
+    @JoinColumn(name = "doctors_id")
     private DoctorsModel doctor;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "medicamento_id")
+    @OneToMany
+    @JoinColumn(name = "prescription_id")
     private List<MedicamentosModel> medicamentos;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "paciente_id")
     private PacienteModel paciente;
 

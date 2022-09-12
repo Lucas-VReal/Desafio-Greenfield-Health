@@ -1,6 +1,6 @@
 package br.com.GreenfieldHealth.controllers;
 
-import br.com.GreenfieldHealth.domain.Mappers.MedicosMapper;
+import br.com.GreenfieldHealth.domain.Mappers.DoctorsMapper;
 import br.com.GreenfieldHealth.domain.dtos.DoctorDto;
 import br.com.GreenfieldHealth.domain.models.DoctorsModel;
 import br.com.GreenfieldHealth.domain.services.DoctorService;
@@ -28,7 +28,6 @@ public class DoctorsController {
     }
 
 
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/allDoctors")
     public ResponseEntity<List<DoctorsModel>> findAllDoctors(){
         return ResponseEntity.status(HttpStatus.OK).body(DoctorsRepository.findAll());
@@ -42,8 +41,8 @@ public class DoctorsController {
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_Doctor')")
     @PostMapping("/newDoctor")
-    public ResponseEntity<Object> createNewDoctor(@RequestBody @Valid DoctorDto DoctorsDto){
-        DoctorsModel newDoctor = MedicosMapper.INSTANCE.toEntity(DoctorsDto);
+    public ResponseEntity<Object> createNewDoctor(@RequestBody @Valid DoctorDto doctorsDto){
+        DoctorsModel newDoctor = DoctorsMapper.INSTANCE.toEntity(doctorsDto);
         return doctorService.createANewDoctor(newDoctor);
     }
 
@@ -51,7 +50,7 @@ public class DoctorsController {
     @PutMapping("/updateDoctor/{id}")
     public ResponseEntity<Object> updateDoctor(@PathVariable(value = "id") UUID id, @RequestBody @Valid DoctorDto DoctorsDto){
         //Obs: Para a atualização são necessários o ID e todos os dados obrigatórios no JSON
-        DoctorsModel updatedDoctor = MedicosMapper.INSTANCE.toEntity(DoctorsDto);
+        DoctorsModel updatedDoctor = DoctorsMapper.INSTANCE.toEntity(DoctorsDto);
         return doctorService.updateDoctor(id, updatedDoctor);
     }
 

@@ -11,9 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import javax.transaction.Transactional;
 import javax.validation.Valid;
-import java.util.Optional;
 import java.util.UUID;
 
 @RestController
@@ -53,12 +51,8 @@ public class PrescriptionController {
     @PostMapping("/newPrescription/")
     public ResponseEntity<Object> createNewPrescription(@RequestBody @Valid PrescricoesDto prescriptionDto){
         PrescricoesModel prescription = PrescricoesMapper.INSTANCE.toEntity(prescriptionDto);
+        System.out.println("");
         return prescriptionService.createANewPrescription(prescription);
-    }
-    @PreAuthorize("hasAnyRole('ROLE_MEDIC', 'ROLE_ADMIN')")
-    @PutMapping("/updatePrescription/{prescriptionId}")
-    public ResponseEntity<Object> updatePrescriptionById(@PathVariable (name = "prescriptionId") UUID prescriptionId, @RequestBody @Valid PrescricoesDto prescriptionDto){
-        return prescriptionService.updatePrescriptionById(prescriptionId, prescriptionDto);
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")

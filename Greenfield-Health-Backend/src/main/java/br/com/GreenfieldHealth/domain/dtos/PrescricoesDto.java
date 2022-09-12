@@ -14,7 +14,7 @@ public class PrescricoesDto {
     @NotBlank
     private String description;
 
-    private DoctorsModel medico;
+    private DoctorsModel doctor;
 
     private List<MedicamentosModel> medicamentos;
 
